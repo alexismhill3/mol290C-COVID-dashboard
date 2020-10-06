@@ -1,0 +1,10 @@
+name: shiny_app
+title:
+username:
+account: kmaclaine
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2911836
+bundleId: 3699798
+url: https://kmaclaine.shinyapps.io/shiny_app/
+when: 1601776183.18751
