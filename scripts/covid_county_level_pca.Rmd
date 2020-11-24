@@ -1,0 +1,44 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+county_health_covid <- read_csv("../data/health_metrics_and_covid_cases_by_county.csv")
+county_health_covid <- county_health_covid %>%
+  mutate(`deaths per 1M` = deaths / (`Population` / 1e6), 
+         `cases per 1M` = cases / (`Population` / 1e6))
+
+county_health_covid %>%
+  filter(State == "Florida") %>%
+  ggplot() +
+  aes(`Percent Over 65`, `deaths per 1M`) +
+  geom_point()
+
+subset_tb <- county_health_covid %>% filter(State == "Vermont")
+subset_tb
+subset_tb_numeric <- subset_tb[,sapply(subset_tb, is.numeric)] 
+subset_tb_numeric <- select(subset_tb_numeric, -c("Population", "cases", "deaths"))
+pairs(subset_tb_numeric)
+#joined %>% filter(State == "Texas" & `deaths per 1M` > 20000)
+```
+
+```{r}
+library(devtools)
+#install_github("vqv/ggbiplot")
+library(ggbiplot)
+```
+
+
+```{r}
+subset_tb_numeric <- scale(subset_tb_numeric)
+subset_tb_numeric[is.na(subset_tb_numeric)] <- 0
+subset_tb_numeric
+health.pca <- prcomp(subset_tb_numeric)
+summary(health.pca)
+ggbiplot(health.pca, labels = subset_tb$County)
+```

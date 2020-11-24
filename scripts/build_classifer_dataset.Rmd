@@ -1,0 +1,65 @@
+---
+title: "R Notebook"
+output: html_document
+---
+
+## Overview
+
+This serves to document how I put together my dataset for the COVID-19 county classifier I'm trying to make (still in progress). 
+
+```{r}
+library(tidyverse)
+library(fuzzyjoin)
+```
+
+Merge raw county level data into a single dataframe, containing:
+- The county name, state, and state code
+- The total population size
+- Health-related attributes of the county (diabetes prevalence, air quality, etc.)
+- Percent of the population over 65
+```{r}
+# read local data into memory
+county_health <- read_csv("../data/raw/health_us_county_part1.csv")
+county_health_2 <-read_csv("../data/raw/health_us_county_part2.csv")
+state_abv <- read_csv("../data/raw/state_abv.csv")
+population_data <- read_tsv("../data/raw/county_pop_estimates_2019.csv")
+perc_over_65 <- read_csv("../data/raw/perc_over_65.csv")
+
+# remove leading period that appeared when I converted this to a csv
+population_data$`Geographic Area` <- gsub('^\\.|\\.$', '', population_data$`Geographic Area`)
+
+# Merge local data into a single dataframe, one row per county
+county_health <- county_health %>%
+  left_join(county_health_2)
+population_data <- population_data %>%
+  separate(`Geographic Area`, c("County", "State"), c(", "))
+county_health <- county_health %>% 
+  separate(Geography, c("County", "Code"), c(", ")) %>%
+  full_join(state_abv) %>%
+  full_join(population_data, by = c("County" = "County", "State" = "State"))
+# this strips the string " County" from entries in the County column
+county_health$County <- sub("\\s+(?:County)$", "", county_health$County)
+perc_over_65$County <- sub("\\s+(?:County)$", "", perc_over_65$County)
+county_health <- county_health %>% 
+  left_join(perc_over_65) %>%
+  rename(`Percent Over 65` = "Percent")
+county_health
+```
+
+Merge the county-level health data with COVID-19 case counts and death counts
+```{r}
+# grab COVID cases & deaths (by county) dataset from the internet
+covid_data <- read_csv("https://github.com/nytimes/covid-19-data/raw/master/us-counties.csv")
+covid_data <- covid_data %>% filter(date == "2020-11-20")
+# merge covid case/death counts per county with county health data
+joined <- county_health %>% 
+   filter(Year == 2018) %>% 
+   left_join(covid_data, by = c("County" = "county", "State" = "state"))
+```
+
+Drop unneeded columns and write the final dataset to disk
+```{r}
+final <- select(joined, -c("Year", `ID Geography`, "date"))
+final %>% write_csv("../data/health_metrics_and_covid_cases_by_county.csv")
+```
+
