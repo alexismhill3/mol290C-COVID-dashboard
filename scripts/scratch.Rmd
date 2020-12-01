@@ -1,0 +1,17 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Overview
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+pop_density <- read_csv("https://raw.githubusercontent.com/COVID19Tracking/associated-data/master/us_census_data/us_census_2018_population_estimates_counties.csv")
+pop_density <- pop_density %>% select(-c("geo_id", "population"))
+pop_density %>% write_csv("../data/raw/pop_density_2018.csv")
+pop_density
+```

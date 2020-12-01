@@ -3,42 +3,76 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+## Overview
+
+This code reads in the dataset documented by `build_classifer_dataset.Rmd` and does a PCA (on the state level) to get a better feel for the data. 
+
+### Load libraries
 ```{r}
-library(tidyverse)
-```
-
-```{r}
-county_health_covid <- read_csv("../data/health_metrics_and_covid_cases_by_county.csv")
-county_health_covid <- county_health_covid %>%
-  mutate(`deaths per 1M` = deaths / (`Population` / 1e6), 
-         `cases per 1M` = cases / (`Population` / 1e6))
-
-county_health_covid %>%
-  filter(State == "Florida") %>%
-  ggplot() +
-  aes(`Percent Over 65`, `deaths per 1M`) +
-  geom_point()
-
-subset_tb <- county_health_covid %>% filter(State == "Vermont")
-subset_tb
-subset_tb_numeric <- subset_tb[,sapply(subset_tb, is.numeric)] 
-subset_tb_numeric <- select(subset_tb_numeric, -c("Population", "cases", "deaths"))
-pairs(subset_tb_numeric)
-#joined %>% filter(State == "Texas" & `deaths per 1M` > 20000)
-```
-
-```{r}
-library(devtools)
 #install_github("vqv/ggbiplot")
+library(tidyverse)
+library(devtools)
 library(ggbiplot)
 ```
 
-
+### Read in data
 ```{r}
-subset_tb_numeric <- scale(subset_tb_numeric)
-subset_tb_numeric[is.na(subset_tb_numeric)] <- 0
-subset_tb_numeric
-health.pca <- prcomp(subset_tb_numeric)
-summary(health.pca)
-ggbiplot(health.pca, labels = subset_tb$County)
+county_health_covid <- read_csv("../data/health_metrics_and_covid_cases_by_county.csv")
+# create two new "per capita" columns for deaths and cases, respectively
+county_health_covid <- county_health_covid %>% 
+  mutate(`Deaths per capita` = deaths / `Population`, 
+         `Cases per capita` = cases / `Population`)
+state_choice <- c("Florida") # select a state for the analysis
+```
+
+### Some misc exploratory plotting
+```{r}
+county_health_covid %>% filter(State == state_choice) %>% ggplot() +
+  aes(`Deaths per capita`) %>% 
+  geom_histogram()
+
+county_health_covid %>%
+  filter(State == state_choice) %>%
+  ggplot() +
+  aes(Percent_Over_65, `Deaths per capita`) +
+  geom_point()
+```
+
+### Grab the state specific subset of the data, and create a new grouping `Severity` based on the deaths per capita in each county
+```{r}
+subset_by_state <- county_health_covid %>% filter(State == state_choice)
+std_dev_deaths_cap <- sd(subset_by_state$`Deaths per capita`)
+mean_deaths_cap <- mean(subset_by_state$`Deaths per capita`)
+
+# Creates a Severity label (low, med, high) based on the deaths per capita in each county
+subset_by_state <- subset_by_state %>% mutate(Severity = case_when(`Deaths per capita` <= (mean_deaths_cap - std_dev_deaths_cap) ~ "low",
+                                                                   `Deaths per capita` > (mean_deaths_cap - std_dev_deaths_cap) &
+                                                                   `Deaths per capita` <= (mean_deaths_cap + std_dev_deaths_cap) ~ "med",
+                                                                   `Deaths per capita` > (mean_deaths_cap + std_dev_deaths_cap) ~ "high"))
+
+# Same as above, but will split the "med" group into "med-low" and "med-high" groups
+# subset_by_state <- subset_by_state %>% mutate(Severity = case_when(`Deaths per capita` <= (mean_deaths_cap - std_dev_deaths_cap) ~ "low",
+#                                                                    `Deaths per capita` > (mean_deaths_cap - std_dev_deaths_cap) &
+#                                                                    `Deaths per capita` <= mean_deaths_cap ~ "med low",
+#                                                                    `Deaths per capita` > mean_deaths_cap &
+#                                                                    `Deaths per capita` <= (mean_deaths_cap + std_dev_deaths_cap) ~ "med high",
+#                                                                    `Deaths per capita` > (mean_deaths_cap + std_dev_deaths_cap) ~ "high"))
+```
+
+### For the actual PCA, create another subset with only numeric values, and drop unneeded variables (note: we'll use `Severity` later to color our PCA plot)
+```{r}
+subset_by_state_numeric <- subset_by_state[,sapply(subset_by_state, is.numeric)] 
+subset_by_state_numeric <- select(subset_by_state_numeric, -c("Population", "cases", "deaths", `Deaths per capita`, `Cases per capita`))
+# scale data and replace NAs with 0
+subset_by_state_numeric <- scale(subset_by_state_numeric)
+subset_by_state_numeric[is.na(subset_by_state_numeric)] <- 0
+```
+
+### Finally, run the PCA and plot the first three PCs
+```{r}
+#pairs(subset_by_state_numeric)
+state.pca <- prcomp(subset_by_state_numeric)
+summary(state.pca)
+ggbiplot(state.pca, labels = subset_by_state$County, ellipse=TRUE, groups=subset_by_state$Severity)
+ggbiplot(state.pca, choices = c(1,3), labels = subset_by_state$County, ellipse=TRUE, groups=subset_by_state$Severity)
 ```
