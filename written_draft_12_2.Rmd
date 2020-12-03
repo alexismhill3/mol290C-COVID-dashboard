@@ -1,0 +1,46 @@
+---
+title: "COVID-19 Dashboard: Community COVID data and disease outcomes"
+output: html_notebook
+---
+##Group 12: Ling Zhou, Alexis Hill, Kendra Zwonitzer Maclaine
+
+### Abstract
+
+The novel coronavirus, designated as the severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2), has been causing an ongoing pandemic worldwide. As of December 2, 2020, the virus has caused 64,844,711 global cases, and 1.5 million deaths have been reported. The common routes of transmission are contact and droplet transmission as well as airborne transmission. Even though the virus is causing deadly symptoms and is highly transmissible, no vaccine is currently available to protect against it. Therefore, we developed a coronavirus disease (COVID-19) information application to help educate the public about the virus and to provide analysis to help people make safer decisions during the pandemic. We created a Shiny app that has two sections: an interactive, local COVID-19 dashboard, and a COVID-19 statistical analysis section. The COVID-19 dashboard contains interactive maps for the state of Texas with both county activity data from a google dataset and COVID-19 cases. There will also be a section that provides local behavior recommendations for individual county, such as the best day to go shopping or to the park during the week. In the statistical analysis section, we explored how COVID-19 outcomes vary by demographic (age, race, sex, etc.), and investigate the role of pre-existing conditions in COVID-19 morbidity.
+
+### Introduction
+
+COVID-19 has affected the entire globe. In the US alone, there have been almost 300,000 deaths from the severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2). Experts have predicted that it will take at least until the end of 2021 for global life to return to "normal" (healthline). Though global data and concerns about COVID can be overwhelming, it is important that each person stays educated on their local COVID situation. This was the motivation behind creating our Shiny app for counties in the state of Texas. We obtained community activity data and COVID case data to create a local and accessible COVID-19 dashboard. We predicted that overall activity would show a sharp decrease at the beginning of the pandemic and then a slow increase toward normal over time. We were also interested in how COVID-19 trends appeared in urban vs. more rural Texas counties.
+
+#### add y'alls intro stuff here
+
+
+### Overall goals
+
+1. Learn how to use and deploy Shiny apps with interactive graphs/maps.
+2. Create a COVID-19 interactive dashboard using Shiny to gain insignt into local COVID-19 trends.
+3. Learn about the possibilities and limits about how publicly available COVID data can be used to help the public.
+
+
+### Data Sources and computational methods
+
+R version 4.0 was used to generate all graphs. Tidyverse was used to clean data. The app was created and deployted using Shiny. Interactive maps were made with leaflet. Interactive graphs showing county-level activity and cases were created using ggplot. The app is stored on a shiny server.
+
+Texas county polygons were downloaded using the tigris package. Activity datasets were downloaded from google: https://www.google.com/covid19/mobility/. COVID-19 case data was taken from the NYtimes github: https://github.com/nytimes/covid-19-data. 
+
+The app is available at: https://kmaclaine.shinyapps.io/shiny_app/. Code for the app can be found at: https://github.com/alexismhill3/mol290c (remember to make it public)
+
+
+### Results
+
+#### Activity Data and Cases
+
+
+
+
+
+
+
+
+https://www.healthline.com/health-news/fauci-and-other-experts-debate-when-our-covid-19-lives-will-return-to-normal#3
+
