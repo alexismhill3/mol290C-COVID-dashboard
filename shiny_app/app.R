@@ -63,6 +63,11 @@ pal <- colorBin("RdYlBu", domain = -75:75, bins = bins,reverse =TRUE)
 bins2 <- c(0,500,2000,8000,32000,124000)
 pal2 <- colorBin("YlOrRd", domain = 0:10000, bins = bins2,reverse =FALSE)
 
+####################################################
+### stuff for LDA tab
+covid_lda_master <- read_csv("health_metrics_and_covid_cases_by_county.csv")
+source("lda.R")
+
 #########Define UI #########
 ui <- fluidPage(theme = shinytheme("flatly"),
                 # Application title
@@ -205,12 +210,32 @@ https://www.google.com/covid19/mobility/ Accessed: 10/3/2020.'),sidebarPanel("")
                            column(6,(img(src="US Cases Confirmed vs Death by State.png",height = 380)
                            ), 
                            column(6, "Figure 8. U.S. Cases Confirmed vs Death by State")
-                           ))
+                           ))),
+                  
                          #####here
                          #####
+                tabPanel(
+                  title = "COVID-19 LDA",
+                  titlePanel("Linear Discriminant Analysis of COVID Severity by County"),
+                  fluidRow(
+                    column(12, 
+                      selectInput(inputId="lda_state_choice", label = "Please select a state for the LDA", choices=covid_lda_master$State)
+                    ),
+                  ),
+                  fluidRow(
+                    column(6, 
+                      plotOutput("component_plot")
+                    )
+                  ),
+                  fluidRow(
+                    column(6, 
+                      tableOutput("variable_density_plot")
+                    )
+                  )
                 )
                 )
-)
+                )
+
 
 
 # Define server logic       
@@ -336,6 +361,24 @@ server <- function(input, output) {
         ggtitle("Cumulative Case Data Each Day")
       })
     
+  })
+  
+  ########### Runs the interactive components for the LDA tab ###########
+  
+  lda_data <- reactive({
+    state_subset <- subset_data_by_state(covid_lda_master, input$lda_state_choice)
+    lda_inputs <- get_train_and_test_sets(state_subset)
+    model <- create_model(lda_inputs$train)
+    list("state_subset" = state_subset, "training_data" = lda_inputs$train, "testing_data" = lda_inputs$test, "model" = model)
+  })
+  
+  output$component_plot <- renderPlot({
+    lda_data <- lda_data()
+    training_data <- lda_data$training_data
+    plot_data <- data.frame(predict(lda_data$model)$x)
+    ggplot(plot_data, aes(LD1, LD2, color = training_data$Severity)) +
+      geom_point() +
+      stat_ellipse(type = "euclid")
   })
   
 }
