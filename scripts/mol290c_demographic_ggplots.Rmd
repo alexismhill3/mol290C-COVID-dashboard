@@ -1,0 +1,171 @@
+---
+title: "Untitled"
+author: "Ling Zhou"
+date: "11/1/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Texas College COVID Cases
+```{r texas college cases} 
+library(tidyverse)
+library(data.table)
+college <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/colleges/colleges.csv")
+#coltravis <- college[college$state=="Texas" & college$county == "Travis",] %>% mutate(prop = coltravis$cases/sum(coltravis$cases)) %>%  mutate(lab.ypos = cumsum(prop) - 0.5*prop)
+
+coltexas <- college[college$state=="Texas",] %>% subset(select=-c(college,notes,ipeds_id,city))
+DT <- data.table(coltexas)
+new_texas <- DT[, lapply(.SD, sum), by = list(date,state,county)]
+
+
+new_texas %>% ggplot() + 
+  aes(x=cases, y=reorder(county, -cases)) + 
+  geom_bar(position=position_dodge(), stat = "identity", fill="Light Blue") + ylab("Texas College COVID-19 Cases by County") + xlab("Total Cases As of 11-23-20") + theme_bw()
+```
+
+
+```{r us cases}
+covid <- read.csv("https://github.com/nytimes/covid-19-data/raw/master/us-counties.csv")
+library(openxlsx)
+states <- read.xlsx(xlsxFile = "https://www2.census.gov/programs-surveys/popest/tables/2010-2019/state/totals/nst-est2019-01.xlsx", fillMergedCells = TRUE, colNames = FALSE)
+states <- states[-c(1,2,3), ]
+names(states) <- as.matrix(states[1, ])
+states <-  states[-c(1,2,3,4,5,6), ] 
+states$`Geographic Area` <- gsub("\\.", "", states$`Geographic Area`)
+
+cases <- aggregate(covid$cases, by=list(State=covid$state), FUN=sum)
+deaths <- aggregate(covid$deaths, by=list(State=covid$state), FUN=sum)
+
+total_cases <- merge(cases, states, by.x="State", by.y="Geographic Area")
+total_cases <- total_cases %>%  rename("Total Cases" = x)
+total_candd <- merge(deaths, total_cases, by.x="State", by.y="State")
+total_candd <- total_candd %>%  rename("Total Deaths" = x)
+
+total_candd$`2019` <- as.numeric(total_candd$`2019`)
+total_candd <- total_candd %>% mutate("Death Rate"=`Total Deaths`/`2019`)
+total_candd <- total_candd %>% mutate("Case Rate"=`Total Cases`/`2019`)
+
+ggplot(total_candd) + aes(`Case Rate`, `State`) + geom_bar(position=position_dodge(), stat = "identity", fill = "Light Blue") + ylab("US States") + xlab("% Case Rate (Blue) and % Death Rate (Red), as of 11-23-20") +
+geom_bar(aes(`Death Rate`, `State`), position=position_dodge(), stat = "identity", fill = "Dark Red") + theme_bw()
+```
+
+```{r texas cases by county}
+covid_texas <- covid %>% filter(covid$state == "Texas", covid$date == "2020-11-23", covid$cases > 2000)
+
+covid_texas %>% ggplot() + 
+  aes(x=cases, y=reorder(county, -cases)) + 
+  geom_bar(position=position_dodge(), stat = "identity", fill="Light Blue") + ylab("Texas COVID-19 Cases by County") + xlab("Total Cases As of 11-23-20 (Counties with less than 2000 cases not shown)") + theme_bw()
+```
+
+
+```{r travis case by age}
+age <- read_csv("/Users/zhouling95/Documents/Fall 2020/Intro to Biostats and Computational Analysis/lz_project/Confirmed_Demographics__Public_View_.csv")
+aged <- read_csv("/Users/zhouling95/Documents/Fall 2020/Intro to Biostats and Computational Analysis/lz_project/Death_Demographics___Public_View_ .csv")
+n <- nrow(age)
+m <- nrow(aged)
+sumval <- age[n, ]
+sumvald <- aged[m, ]
+sumval <- sumval[, c(24,25,26,27,28,29,30,31,32,33)]
+sumvald <- sumvald[, c(25,26,27,28,29,30,31,32,33,34)]
+
+sumval <- sumval %>% rename(
+     "less than 1 year old" = "Age_Ttl_Le",
+     "1-9 year old" = "Age_Ttl_01",
+     "10-19 year old" = "Age_Ttl_10",
+     "20-29 year old" = "Age_Ttl_20",
+     "30-39 year old" = "Age_Ttl_30",
+     "40-49 year old" = "Age_Ttl_40",
+     "50-59 year old" = "Age_Ttl_50",
+     "60-69 year old" = "Age_Ttl_60",
+     "70-79 year old" = "Age_Ttl_70",
+     "ages 80 and up" = "Age_Ttl_80"
+    ) 
+sumvald <- sumvald %>% rename(
+     "less than 1 year old" = "Age_Ttl_Le",
+     "1-9 year old" = "Age_Ttl_01",
+     "10-19 year old" = "Age_Ttl_10",
+     "20-29 year old" = "Age_Ttl_20",
+     "30-39 year old" = "Age_Ttl_30",
+     "40-49 year old" = "Age_Ttl_40",
+     "50-59 year old" = "Age_Ttl_50",
+     "60-69 year old" = "Age_Ttl_60",
+     "70-79 year old" = "Age_Ttl_70",
+     "ages 80 and up" = "Age_Ttl_80"
+    ) 
+sumval <- pivot_longer(sumval, cols = everything(),names_to = "Age Group", values_to = "Counts")
+sumvald <- pivot_longer(sumvald, cols = everything(),names_to = "Age Group", values_to = "Counts")
+summ <- merge(sumval, sumvald, by = "Age Group")
+summ <- summ %>% rename("Confirmed" = Counts.x, "Death" = Counts.y)
+summ$`Age Group` <- factor(summ$`Age Group`)
+levels(summ$`Age Group`)
+
+#summ <- summ[c(10, 1:9),]
+#row.names(summ) <- 1:nrow(summ)
+summ$`Age Group` <- factor(summ$`Age Group`, levels = c("less than 1 year old", "1-9 year old", "10-19 year old", "20-29 year old", "30-39 year old", "40-49 year old", "50-59 year old", "60-69 year old", "70-79 year old", "ages 80 and up"))
+
+summ %>% ggplot() + 
+  geom_bar(stat = "identity",fill = "Light Blue", aes(x=`Age Group`, y=`Confirmed`)) + 
+  geom_bar(stat = "identity",fill = "Dark Red", aes(x=`Age Group`, y=`Death`)) + 
+  theme_bw() + 
+  xlab("Blue: Total Confirmed Cases, Red: Total Death Cases") + 
+  ylab("Travis County Total Cases by Age Group (as of today)")
+
+```
+
+```{r}
+rne <- age[nrow(summ), 39:47]
+
+rne <- rne %>% rename(
+  "Asian" = "Race_Asian",
+  "Black" = "Race_Black",
+  "Other Race" = "Race_Other",
+  "Pacific" = "Race_Pacif",
+  "Race Unknown" = "Race_Unk",
+  "White" = "Race_White",
+  "Hispanic" = "Eth_Hispan",
+  "Non Hispanic" = "Eth_Non_Hi",
+  "Ethnic Unknown" = "Eth_Unk"
+)
+rne <- pivot_longer(rne, cols = everything(), names_to = "Race and Ethnicity", values_to = "Percentage")
+rne$`Race and Ethnicity` <- factor(rne$`Race and Ethnicity`)
+race <- rne[1:6,]
+race <- race %>% rename("Race" = "Race and Ethnicity")
+
+
+ggplot(race, aes(x="", y=`Percentage`, fill=`Race`)) + geom_bar(stat="identity", width=1, color="White") + coord_polar("y", start=0) + theme_void() + ggtitle("Travis County Confirmed Cases by Racial Group")
+```
+
+```{r}
+ethnic <- rne[7:9,]
+ethnic <- ethnic %>% rename("Ethnicity" = "Race and Ethnicity")
+ggplot(ethnic, aes(x="", y=`Percentage`, fill=`Ethnicity`)) + geom_bar(stat="identity", width=1, color="White") + coord_polar("y", start=0) + theme_void() + ggtitle("Travis County Confirmed Cases by Ethnic Group")
+```
+
+```{r}
+rned <- aged[nrow(summ), 40:47]
+rned <- rned %>% rename(
+  "Asian" = "Race_Asian",
+  "Black" = "Race_Black",
+  "Other Race" = "Race_Other",
+  "Race Unknown" = "Race_Unk",
+  "White" = "Race_White",
+  "Hispanic" = "Eth_Hispan",
+  "Non Hispanic" = "Eth_Non_Hi",
+  "Ethnic Unknown" = "Eth_Unk"
+)
+rned <- pivot_longer(rned, cols = everything(), names_to = "Race and Ethnicity", values_to = "Percentage")
+rned$`Race and Ethnicity` <- factor(rned$`Race and Ethnicity`)
+raced <- rned[1:5,]
+raced <- raced %>% rename("Race" = "Race and Ethnicity")
+ggplot(raced, aes(x="", y=`Percentage`, fill=`Race`)) + geom_bar(stat="identity", width=1, color="White") + coord_polar("y", start=0) + theme_void() + ggtitle("Travis County Death Cases by Racial Group")
+```
+
+```{r}
+ethnicd <- rned[6:8,]
+ethnicd <- ethnicd %>% rename("Ethnicity" = "Race and Ethnicity")
+ggplot(ethnicd, aes(x="", y=`Percentage`, fill=`Ethnicity`)) + geom_bar(stat="identity", width=1, color="White") + coord_polar("y", start=0) + theme_void() + ggtitle("Travis County Death Cases by Ethnic Group")
+```
+
