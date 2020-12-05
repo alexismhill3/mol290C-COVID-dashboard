@@ -52,6 +52,7 @@ activities_merged <- readRDS("activities_merged.rds")
 #####################################################
 ####Simplifies polygons
 map_dataset <- readRDS("map_dataset.rds")
+map_dataset$geometry<-rmapshaper::ms_simplify(map_dataset$geometry,keep=0.001)
 
 #####Creates color palattes
 #Color pallette for activity
@@ -89,7 +90,8 @@ ui <- fluidPage(theme = shinytheme("flatly"),
                            ),
                            
                            fluidRow(
-                             column(12, h4("      The novel coronavirus, designated as the severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2), has been causing an ongoing pandemic worldwide. As of October 12, 2020, the virus has caused 37,672,440 global cases, and over one million deaths have been reported. The common routes of transmission are contact and droplet transmission as well as airborne transmission. Even though the virus is causing deadly symptoms and is highly transmissible, no vaccine is currently available to protect against it. Therefore, we aim to develop a coronavirus disease (COVID-19) information application to help educate the public about the virus and to provide analysis to help people make safer decisions during the pandemic. We plan to create a Shiny app that has two sections: an interactive, local COVID-19 dashboard, and a COVID-19 statistical analysis section. The COVID-19 dashboard will contain interactive maps for the state of texas with both county activity data from a google dataset and COVID-19 cases. There will also be a section that provides local behavior recommendations for Travis county, such as the best day to go shopping or to the park during the week. In the statistical analysis section, we will explore how COVID-19 outcomes vary by demographic (age, race, sex, etc.), and investigate the role of pre-existing conditions in COVID-19 morbidity. "))
+                             
+                             column(12, h4("      The novel coronavirus, designated as the severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2), has been causing an ongoing pandemic worldwide. As of December 2, 2020, the virus has caused 64,844,711 global cases, and 1.5 million deaths have been reported. The common routes of transmission are contact and droplet transmission as well as airborne transmission. Even though the virus is causing deadly symptoms and is highly transmissible, no vaccine is currently available to protect against it. Therefore, we developed a coronavirus disease (COVID-19) information application to help educate the public about the virus and to provide analysis to help people make safer decisions during the pandemic. We created a Shiny app that has two sections: an interactive, local COVID-19 dashboard, and a COVID-19 statistical analysis section. The COVID-19 dashboard contains interactive maps for the state of Texas with both county activity data from a google dataset and COVID-19 cases. There will also be a section that provides local behavior recommendations for individual county, such as the best day to go shopping or to the park during the week. In the statistical analysis section, we explored how COVID-19 outcomes vary by demographic (age, race, sex, etc.), and investigate the role of pre-existing conditions in COVID-19 morbidity."))
                            )
                 ),
                   
@@ -104,7 +106,7 @@ ui <- fluidPage(theme = shinytheme("flatly"),
                                            )
                            ),
                            fluidRow(
-                                    column(12,selectInput(inputId="type", label= "Activity Type", choices=c("Shopping"="Retail_Recreation", "Grocery"="Grocery_Pharmacy", "Go to the Park"="Parks"))
+                                    column(12,selectInput(inputId="type", label= "Activity Type", choices=c("Shopping/Restaurants"="Retail_Recreation", "Grocery"="Grocery_Pharmacy", "Go to the Park"="Parks"))
                                            )
                            ),
                            
@@ -144,8 +146,8 @@ ui <- fluidPage(theme = shinytheme("flatly"),
                                                 min = as.Date(as.POSIXct("2020-02-16")),
                                                 max = as.Date(as.POSIXct("2020-08-15")),
                                                 value = as.Date(as.POSIXct("2020-02-16")),
-                                                step = 3,animate=animationOptions(interval=3000)),
-                                    selectInput(inputId = "dataset",label = "Activity Category",choices=c("Grocery_Pharmacy","Retail_Recreation","Parks"),selected = "Grocery_Pharmacy")
+                                                step = 3,animate=animationOptions(interval=1500)),
+                                    selectInput(inputId = "dataset",label = "Activity Category",choices=c("Grocery"="Grocery_Pharmacy","Shopping/Restaurants"="Retail_Recreation","Parks"),selected = "Grocery_Pharmacy")
                              ),
                              column(
                                6,
@@ -154,7 +156,7 @@ ui <- fluidPage(theme = shinytheme("flatly"),
                                                 min = as.Date(as.POSIXct("2020-02-16")),
                                                 max = as.Date(as.POSIXct("2020-08-15")),
                                                 value = as.Date(as.POSIXct("2020-02-16")),
-                                                step = 3,animate=animationOptions(interval=3000))
+                                                step = 3,animate=animationOptions(interval=1500))
                                )
                              ),
                              
@@ -167,48 +169,49 @@ https://www.google.com/covid19/mobility/ Accessed: 10/3/2020.'),sidebarPanel("")
                            ),
                   #####you guys should only have to add things between here and 
                   
-                tabPanel(title = "Local COVID Plots",
+                tabPanel(title = "Local COVID-19 Plots",
                          titlePanel("Local Covid Demographic Data"),
                          #example of adding an image
                          fluidRow(
                            column(6,(img(src="Travis Confirmed by Race.png",height = 380)
                            ), 
-                           column(6, "Travis County Confirmed Cases by Race")
+                           column(6, "Figure 1. Travis County Confirmed Cases by Race")
                            ),
                            column(6,(img(src="Travis Confirmed by Ethnicity.png",height = 380)
                            ), 
-                           column(6, "Travis County Confirmed Cases by Ethnicity")
+                           column(6, "Figure 2. Travis County Confirmed Cases by Ethnicity")
                            )),
                          
                          fluidRow(
                            column(6,(img(src="Travis Death by Race.png",height = 380)
                            ), 
-                           column(6, "Travis County Death Cases by Race")
+                           column(6, "Figure 3. Travis County Death Cases by Race")
                            ),
                            column(6,(img(src="Travis Death by Ethnicity.png",height = 380)
                            ), 
-                           column(6, "Travis County Death Cases by Ethnicity")
+                           column(6, "Figure 4. Travis County Death Cases by Ethnicity")
                            )),
                          
                          fluidRow(
                            column(6,(img(src="Texas Covid Cases by County.png",height = 380)
                            ), 
-                           column(6, "Texas Total Cases by County")
+                           column(6, "Figure 5. Texas Total Cases by County")
                            ),
                            column(6,(img(src="Texas College Total Cases by County.png",height = 380)
                            ), 
-                           column(6, "Texas College Total Cases by County")
+                           column(6, "Figure 6. Texas College Total Cases by County")
                            )),
                          
                          fluidRow(
                            column(6,(img(src="Confirmed and Death by Age Group.png",height = 380)
                            ), 
-                           column(6, "Travis County Confirmed and Death Cases by Age Group")
+                           column(6, "Figure 7. Travis County Confirmed and Death Cases by Age Group")
                            ),
                            column(6,(img(src="US Cases Confirmed vs Death by State.png",height = 380)
                            ), 
-                           column(6, "US Cases Confirmed vs Death by State")
+                           column(6, "Figure 8. U.S. Cases Confirmed vs Death by State")
                            ))),
+                  
                          #####here
                          #####
                 tabPanel(
@@ -262,6 +265,7 @@ server <- function(input, output) {
       subset(select = c(1:(ncol(activities_merged)-26),
                         (ncol(activities_merged)))) %>%
       pivot_longer(cols = starts_with("2020"),names_to = c("Date"),values_to="activity")%>%
+      slice(tail(row_number(), 28))%>%
       add_column(Day = weekdays(as.Date(.$Date))) %>% 
       drop_na(.) %>%
       group_by(Day,Type) %>%
@@ -269,7 +273,7 @@ server <- function(input, output) {
       ungroup%>%
       filter(Day!="Saturday"&Day!="Sunday") %>%
       slice(which.max(`mean(activity)`),which.min(`mean(activity)`)) %>%
-      add_column(" "=c("Worst Day:","Best Day:"),.before = "Day") 
+      add_column(" "=c("Worst Day:","Best Day:"),.before = "Day")
     
   })
   
