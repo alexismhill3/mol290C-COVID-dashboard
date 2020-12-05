@@ -42,6 +42,7 @@ subset_by_state <- subset_by_state %>% mutate(Severity = case_when(`Deaths per c
 subset_by_state
 ```
 
+### Create a test set and a training set for the LDA
 ```{r}
 # drop unneeded columns
 lda_data <- dplyr::select(subset_by_state, -c("County", "Code", "State", "Abbrev", "Population", "state", "fips", "cases", "deaths", `Deaths per capita`))
@@ -65,6 +66,7 @@ train_transformed <- preproc.param %>% predict(train_data)
 test_transformed <- preproc.param %>% predict(test_data)
 ```
 
+### Run the actual analysis
 ```{r}
 covid_lda <- lda(formula = Severity ~ ., data = train_transformed)
 covid_lda
@@ -72,6 +74,7 @@ covid_predictions <- covid_lda %>% predict(test_transformed)
 mean(covid_predictions$class==test_transformed$Severity)
 ```
 
+### Plot the training data against the two discriminants
 ```{r}
 train_transformed
 lda_plot_data <- data.frame(predict(covid_lda)$x)
@@ -80,4 +83,13 @@ lda_plot_data
 ggplot(lda_plot_data, aes(LD1, LD2, color = train_transformed$Severity)) +
   geom_point() +
   stat_ellipse(type = "euclid")
+```
+
+```{r}
+hist_data <- train_transformed %>% 
+  rename(`Percent over 65` = "Percent_Over_65", `Population Density` = "pop_density") %>%
+  pivot_longer(cols = c(1,2,3,4,5,6,7,8,9), names_to = "variable")
+ggplot(hist_data, aes(x = value, colour = Severity)) + 
+  geom_density() + 
+  facet_wrap( ~ variable, scales = "free_y")
 ```

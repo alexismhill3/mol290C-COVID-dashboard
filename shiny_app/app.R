@@ -217,25 +217,16 @@ https://www.google.com/covid19/mobility/ Accessed: 10/3/2020.'),sidebarPanel("")
                   fluidRow(
                     column(12, 
                       selectInput(inputId="lda_state_choice", label = "Please select a state for the LDA", choices=covid_lda_master$State)
-                      #selectInput(inputId="lda_state_choice", label = "Please select a state for the LDA", choices=c("Florida", "Texas", "Ohio"))
                     ),
                   ),
                   fluidRow(
                     column(6, 
-                      plotOutput("component_plot", hover = hoverOpts(id ="component_plot_hover"))
-                    ),
-                    column(6, 
-                      leafletOutput("county_severity_plot")
+                      plotOutput("component_plot")
                     )
                   ),
                   fluidRow(
-                    column(width = 5,
-                           verbatimTextOutput("component_hover_info")
-                          )
-                  ),
-                  fluidRow(
                     column(6, 
-                      tableOutput("component_weights_table")
+                      tableOutput("variable_density_plot")
                     )
                   )
                 )
@@ -386,12 +377,6 @@ server <- function(input, output) {
       stat_ellipse(type = "euclid")
   })
   
-  output$component_hover_info <- renderPrint({
-    if(!is.null(input$component_plot_hover)){
-      hover=input$component_plot_hover
-      lda_data()$training_data$Severity
-    }
-  })
 }
 
 # Run the application 
