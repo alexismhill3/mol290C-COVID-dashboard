@@ -1,6 +1,8 @@
 ---
 title: "COVID-19 Dashboard: Community COVID data and disease outcomes"
 output: html_notebook
+editor_options: 
+  chunk_output_type: inline
 ---
 ##Group 12: Ling Zhou, Alexis Hill, Kendra Zwonitzer Maclaine
 
@@ -30,8 +32,19 @@ Texas county polygons were downloaded using the tigris package. Activity dataset
 
 The app is available at: https://kmaclaine.shinyapps.io/shiny_app/. Code for the app can be found at: https://github.com/alexismhill3/mol290c (remember to make it public)
 
+COVID-19 college cases data source: https://github.com/nytimes/covid-19-data/tree/master/colleges. Travis county local COVID-19 cases and demographic information data was taken from Austin-Travis County COVID-19 Dashboard Public Datasets: https://experience.arcgis.com/experience/3793562ab87e4299b106e0c282bb1fc5.
+
 
 ### Results
+
+
+**Local COVID Plots**
+COVID-19 is reported to have been disproportionally affecting the minority and the elderly groups. Knowing the trend of case and death distributions can provide guidance for public health practices as well as guidance for vaccine and resource distribution. Therefore, in this section, we aim to use both nation-wide and Texas local public datasets to analyze COVID-19 case and death distributions among different locations, racial and ethnic groups and age groups. Nation-wide, as of the end of November, we see the highest death confirmed case per capita of 5.87% in Louisiana, and the highest death per capita in New York and New Jersey at over 0.37%. Texas ranks the 24th (from high to low) for total confirmed cases per capita nation-wide, and the 22nd (from high to low) for total deaths per capita nation-wide (Figure 8). Within Texas, Harris county, Dallas county and Tarrant have the highest number of confirmed cases by the end of November, and Travis county has the 7th highest number of cases within Texas (Figure 5). We also looked at the Texas confirmed case distributions within colleges and universities by county, and our analysis shows that Lubbock county, Brazos county and Tarrant county have the highest numbers of cases from colleges and universities. Travis county has the 4th highest number of cases reported from local colleges and universities (Figure 6). 
+
+To take a closer look at the demographic information of the confirmed and death cases within Travis county, we analyzed data from Austin-Travis County COVID-19 Dashboard Public Datasets available online and plotted the distributions of total confirmed and death cases by age group. Based on our analysis, by the end of November, the highest number of cases falls into the younger population age between 20 to 39, but very low amount of death cases was reported within these age groups. Unlike the younger generations with relatively less pre-existing health conditions, people over 50 years old has much higher death rates as their age increases, with the group “ages 80 and up” being hit the most strongly by COVID-19 (Figure 7). We also looked at the racial and ethnical distribution of local cases (Figure 1, 3), and we found that white people contributed to the biggest proportion of the local cases while the minorities (73%) comparing to the minoritized groups (Asian: 4%, Black: 10%, Pacific: 0%, Other: 8%). Surprisingly, Asian has 0% reported death locally, and White has 69% highest death percentage in Austin (Black: 8%, Other: 9%). Non-Hispanics group has slightly higher proportion of confirmed cases compared to Hispanics, and the death case proportions are relatively equal among the two groups (Figure 2, 4).
+
+With all the information above, we saw that the younger generations are the main group who’s contracting and potentially spreading the disease, but the aged groups are the ones who are dying from it. Racial- and ethnic-wise, the white population are the largest population who are contracting the disease, and the proportion is close to the proportion of the White population (70.8%, Austin, TX Census Place, https://datausa.io) in Austin. Data analysis limitations in this section includes 1) the Texas college total cases analysis may be biased towards the universities that are rigorously testing and reporting the cases as there is no state-wise standards for testing and reporting among colleges and universities, and 2) it is difficult to give statistical significance conclusions on the case distribution analysis as there are no duplicates available for standard error calculation for case reporting.
+
 
 #### Activity Data and Cases
 

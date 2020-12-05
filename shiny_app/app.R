@@ -162,47 +162,47 @@ https://www.google.com/covid19/mobility/ Accessed: 10/3/2020.'),sidebarPanel("")
                            ),
                   #####you guys should only have to add things between here and 
                   
-                tabPanel(title = "Local COVID Plots",
+                tabPanel(title = "Local COVID-19 Plots",
                          titlePanel("Local Covid Demographic Data"),
                          #example of adding an image
                          fluidRow(
                            column(6,(img(src="Travis Confirmed by Race.png",height = 380)
                            ), 
-                           column(6, "Travis County Confirmed Cases by Race")
+                           column(6, "Figure 1. Travis County Confirmed Cases by Race")
                            ),
                            column(6,(img(src="Travis Confirmed by Ethnicity.png",height = 380)
                            ), 
-                           column(6, "Travis County Confirmed Cases by Ethnicity")
+                           column(6, "Figure 2. Travis County Confirmed Cases by Ethnicity")
                            )),
                          
                          fluidRow(
                            column(6,(img(src="Travis Death by Race.png",height = 380)
                            ), 
-                           column(6, "Travis County Death Cases by Race")
+                           column(6, "Figure 3. Travis County Death Cases by Race")
                            ),
                            column(6,(img(src="Travis Death by Ethnicity.png",height = 380)
                            ), 
-                           column(6, "Travis County Death Cases by Ethnicity")
+                           column(6, "Figure 4. Travis County Death Cases by Ethnicity")
                            )),
                          
                          fluidRow(
                            column(6,(img(src="Texas Covid Cases by County.png",height = 380)
                            ), 
-                           column(6, "Texas Total Cases by County")
+                           column(6, "Figure 5. Texas Total Cases by County")
                            ),
                            column(6,(img(src="Texas College Total Cases by County.png",height = 380)
                            ), 
-                           column(6, "Texas College Total Cases by County")
+                           column(6, "Figure 6. Texas College Total Cases by County")
                            )),
                          
                          fluidRow(
                            column(6,(img(src="Confirmed and Death by Age Group.png",height = 380)
                            ), 
-                           column(6, "Travis County Confirmed and Death Cases by Age Group")
+                           column(6, "Figure 7. Travis County Confirmed and Death Cases by Age Group")
                            ),
                            column(6,(img(src="US Cases Confirmed vs Death by State.png",height = 380)
                            ), 
-                           column(6, "US Cases Confirmed vs Death by State")
+                           column(6, "Figure 8. U.S. Cases Confirmed vs Death by State")
                            ))
                          #####here
                          #####
