@@ -15,7 +15,7 @@ county_health_covid <- read_csv("../data/health_metrics_and_covid_cases_by_count
 # create new column for deaths per capita
 county_health_covid <- county_health_covid %>% 
   mutate(`Deaths per capita` = deaths / `Population`)
-state_choice <- c("New York") # select a state for the analysis
+state_choice <- c("Florida") # select a state for the analysis
 
 # lets see what the deaths per capita distribution looks like:
 county_health_covid %>% filter(State == state_choice) %>% ggplot() +
@@ -79,5 +79,5 @@ lda_plot_data
 #lda_plot_data <- cbind(train_transformed, predict(covid_lda)$x)
 ggplot(lda_plot_data, aes(LD1, LD2, color = train_transformed$Severity)) +
   geom_point() +
-  stat_ellipse(type = "norm")
+  stat_ellipse(type = "euclid")
 ```
