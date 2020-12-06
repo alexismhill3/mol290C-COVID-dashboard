@@ -22,20 +22,27 @@ COVID-19 has disproportional impacts on different locations, age groups and raci
 ### Overall goals
 
 1. Learn how to use and deploy Shiny apps with interactive graphs/maps.
-2. Generate demographic plots to explore the demographical distributions of the local confirmed cases and deaths.
-3. Create a COVID-19 interactive dashboard using Shiny to gain insignt into local COVID-19 trends.
-4. Learn about the possibilities and limits about how publicly available COVID data can be used to help the public.
+2. Create a COVID-19 interactive dashboard using Shiny to gain insight into local, national, and global COVID-19 trends.
+3. Generate demographic plots to explore the demographic distributions of the local confirmed cases and deaths.
+4. Understand how population-level attributes influence COVID-19 severity.
+5. Explore the possibilities and limitations of using publicly available COVID-19 data to perform meaningful analyses.
 
 
 ### Data Sources and computational methods
 
-R version 4.0 was used to generate all graphs. Tidyverse was used to clean data. The app was created and deployted using Shiny. Interactive maps were made with leaflet. Interactive graphs showing county-level activity and cases were created using ggplot. The app is stored on a shiny server.
+#### Application development:
 
-Texas county polygons were downloaded using the tigris package. Activity datasets were downloaded from google: https://www.google.com/covid19/mobility/. COVID-19 case data was taken from the NYtimes github: https://github.com/nytimes/covid-19-data. 
+R version 4.0 was used to generate all graphs. Tidyverse was used to clean data. The app was created and deployed using Shiny. Interactive maps were made with leaflet. Interactive graphs showing county-level activity and cases were created using ggplot. The app is stored on a shiny server.
 
 The app is available at: https://kmaclaine.shinyapps.io/shiny_app/. Code for the app can be found at: https://github.com/alexismhill3/mol290c (remember to make it public)
 
+#### Data collection and analysis:
+
+Texas county polygons were downloaded using the tigris package. Activity datasets were downloaded from google: https://www.google.com/covid19/mobility/. COVID-19 case data was taken from the NYtimes github: https://github.com/nytimes/covid-19-data. 
+
 COVID-19 college cases data source: https://github.com/nytimes/covid-19-data/tree/master/colleges. Travis county local COVID-19 cases and demographic information data was taken from Austin-Travis County COVID-19 Dashboard Public Datasets: https://experience.arcgis.com/experience/3793562ab87e4299b106e0c282bb1fc5.
+
+Data for the COVID-19 severity analysis was downloaded from several sources and combined using functions from the tidyverse package. Population wellness metrics (diabetes prevalence, smoking prevalence, etc.) was downloaded from the US data aggregate site https://datausa.io/. Unites States county populations and population densities were collected from the Unites States census site, https://www.census.gov/data.html. COVID-19 cases and deaths were retrieved from the NYtimes github repository cited above. The COVID-19 county principle component analysis (not appearing in the app) was performed using the base-R function `prcomp`, and plotted using `ggbiplot` from the ggbiplot package ("vqv/ggbiplot"). The linear discriminant analysis was performed using the `lda` function from the package MASS. Code for both analysis, as well as the data pre-processing code, can be found in the `scripts` directory in the application repo. 
 
 
 ### Results
