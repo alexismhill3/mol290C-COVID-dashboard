@@ -85,6 +85,7 @@ ggplot(lda_plot_data, aes(LD1, LD2, color = train_transformed$Severity)) +
   stat_ellipse(type = "euclid")
 ```
 
+### plot densities for all of the variables
 ```{r}
 hist_data <- train_transformed %>% 
   rename(`Percent over 65` = "Percent_Over_65", `Population Density` = "pop_density") %>%
