@@ -1,0 +1,37 @@
+State,Variable,Weight
+Florida,Adult Obesity,-0.2
+Florida,Adult Smoking,-0.6
+Florida,Air Pollution,-0.25
+Florida,Diabetes Prevalence,-0.11
+Florida,Food Environment Index,-0.42
+Florida,Excessive Drinking,1
+Florida,Median Household Income,-0.14
+Florida,Population Density,-0.33
+Florida,Percent Over 65,0.04
+California,Adult Obesity,-1.04
+California,Adult Smoking,0.95
+California,Air Pollution,0.1
+California,Diabetes Prevalence,0.33
+California,Food Environment Index,-0.6
+California,Excessive Drinking,0.02
+California,Median Household Income,0.45
+California,Population Density,-0.29
+California,Percent Over 65,0.5
+Vermont,Adult Obesity,1.42
+Vermont,Adult Smoking,-0.32
+Vermont,Air Pollution,-2.86
+Vermont,Diabetes Prevalence,1.66
+Vermont,Food Environment Index,-0.56
+Vermont,Excessive Drinking,3.98
+Vermont,Median Household Income,2.23
+Vermont,Population Density,-2.71
+Vermont,Percent Over 65,0.86
+Ohio,Adult Obesity,-0.52
+Ohio,Adult Smoking,0.05
+Ohio,Air Pollution,0.58
+Ohio,Diabetes Prevalence,0.01
+Ohio,Food Environment Index,0.41
+Ohio,Excessive Drinking,-0.37
+Ohio,Median Household Income,0.17
+Ohio,Population Density,0.21
+Ohio,Percent Over 65,0.52

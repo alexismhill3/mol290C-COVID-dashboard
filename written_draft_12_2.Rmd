@@ -6,15 +6,15 @@ output:
 editor_options:
   chunk_output_type: inline
 ---
-##Group 12: Ling Zhou, Alexis Hill, Kendra Zwonitzer Maclaine
+## Group 12: Ling Zhou, Alexis Hill, Kendra Zwonitzer Maclaine
 
 ### Abstract
 
-The novel coronavirus, designated as the severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2), has been causing an ongoing pandemic worldwide. As of December 2, 2020, the virus has caused 64,844,711 global cases, and 1.5 million deaths have been reported. The common routes of transmission are contact and droplet transmission as well as airborne transmission. Even though the virus is causing deadly symptoms and is highly transmissible, no vaccine is currently available to protect against it. Therefore, we developed a coronavirus disease (COVID-19) information application to help educate the public about the virus and to provide analysis to help people make safer decisions during the pandemic. We created a Shiny app that has two sections: an interactive, local COVID-19 dashboard, and a COVID-19 statistical analysis section. The COVID-19 dashboard contains Travis county and Texas demographic information (age, race, ethnicity, etc.) on the confirmed cases and deaths as well as interactive maps for the state of Texas with both county activity data from a google dataset and COVID-19 cases. There will also be a section that provides local behavior recommendations for individual county, such as the best day to go shopping or to the park during the week. In the statistical analysis section, we investigate the role of pre-existing conditions in COVID-19 morbidity.
+The novel coronavirus, designated as the severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2), has been causing an ongoing pandemic worldwide. As of December 2, 2020, the virus has caused 64,844,711 global cases, and 1.5 million deaths have been reported. The common routes of transmission are contact and droplet transmission as well as airborne transmission. Even though the virus is causing deadly symptoms and is highly transmissible, no vaccine is currently available to protect against it. Therefore, we developed a coronavirus disease (COVID-19) information application to help educate the public about the virus and to provide analysis to help people make safer decisions during the pandemic. We created a Shiny app with an interactive, local COVID-19 dashboard, and informational statistical analysis. The COVID-19 dashboard contains Travis county and Texas demographic information (age, race, ethnicity, etc.) on the confirmed cases and deaths as well as interactive maps for the state of Texas with both county activity data from a google dataset and COVID-19 cases. The app also provides local behavior recommendations for individual counties, such as the best day to go shopping or to the park during the week. Finally, we present and in-depth analysis of the county-level features that explain the most variation in COVID-19 severity in the United States. 
 
 ### Introduction
 
-COVID-19 has affected the entire globe. In the US alone, there have been almost 300,000 deaths from the severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2). Experts have predicted that it will take at least until the end of 2021 for global life to return to "normal" (healthline). Though global data and concerns about COVID can be overwhelming, it is important that each person stays educated on their local COVID situation. This was the motivation behind creating our Shiny app for counties in the state of Texas. We obtained community activity data and COVID case data to create a local and accessible COVID-19 dashboard. We predicted that overall activity would show a sharp decrease at the beginning of the pandemic and then a slow increase toward normal over time. We were also interested in how COVID-19 trends appeared in urban vs. more rural Texas counties.
+COVID-19 has affected the entire globe. In the US alone, there have been almost 300,000 deaths from the severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2). Experts have predicted that it will take at least until the end of 2021 for global life to return to "normal" [1]("https://www.healthline.com/health-news/fauci-and-other-experts-debate-when-our-covid-19-lives-will-return-to-normal#3). Though global data and concerns about COVID can be overwhelming, it is important that each person stays educated on their local COVID situation. This was the motivation behind creating our Shiny app for counties in the state of Texas. We obtained community activity data and COVID case data to create a local and accessible COVID-19 dashboard. We predicted that overall activity would show a sharp decrease at the beginning of the pandemic and then a slow increase toward normal over time. We were also interested in how COVID-19 trends appeared in urban vs. more rural Texas counties.
 
 COVID-19 has disproportional impacts on different locations, age groups and racial groups. Understanding the local distributions of confirmed cases and deaths will get allow us to better prepare for the future and take actions to protect ourselves. Specifically, COVID-19 data demographic analysis could provide guidance for resource allocation and incoming vaccine distribution.
 
@@ -34,7 +34,7 @@ COVID-19 has disproportional impacts on different locations, age groups and raci
 
 R version 4.0 was used to generate all graphs. Tidyverse was used to clean data. The app was created and deployed using Shiny. Interactive maps were made with leaflet. Interactive graphs showing county-level activity and cases were created using ggplot. The app is stored on a shiny server.
 
-The app is available at: https://kmaclaine.shinyapps.io/shiny_app/. Code for the app can be found at: https://github.com/alexismhill3/mol290c (remember to make it public)
+The app is available at: https://kmaclaine.shinyapps.io/shiny_app/. Code for the app can be found at: https://github.com/alexismhill3/mol290C-COVID-dashboard
 
 #### Data collection and analysis:
 
@@ -42,7 +42,7 @@ Texas county polygons were downloaded using the tigris package. Activity dataset
 
 COVID-19 college cases data source: https://github.com/nytimes/covid-19-data/tree/master/colleges. Travis county local COVID-19 cases and demographic information data was taken from Austin-Travis County COVID-19 Dashboard Public Datasets: https://experience.arcgis.com/experience/3793562ab87e4299b106e0c282bb1fc5.
 
-Data for the COVID-19 severity analysis was downloaded from several sources and combined using functions from the tidyverse package. Population wellness metrics (diabetes prevalence, smoking prevalence, etc.) was downloaded from the US data aggregate site https://datausa.io/. Unites States county populations and population densities were collected from the Unites States census site, https://www.census.gov/data.html. COVID-19 cases and deaths were retrieved from the NYtimes github repository cited above. The COVID-19 county principle component analysis (not appearing in the app) was performed using the base-R function `prcomp`, and plotted using `ggbiplot` from the ggbiplot package ("vqv/ggbiplot"). The linear discriminant analysis was performed using the `lda` function from the package MASS. Code for both analysis, as well as the data pre-processing code, can be found in the `scripts` directory in the application repo. 
+Data for the COVID-19 severity analysis was downloaded from several sources and combined using functions from the tidyverse package. Population wellness metrics (diabetes prevalence, smoking prevalence, etc.) were downloaded from the US data aggregate site https://datausa.io/. Unites States county populations and population densities were collected from the Unites States census site, https://www.census.gov/data.html. COVID-19 cases and deaths were retrieved from the NYtimes github repository cited above. The COVID-19 county principle component analysis (not appearing in the app) was performed using the base-R function `prcomp`, and plotted using `ggbiplot` from the ggbiplot package ("vqv/ggbiplot"). The linear discriminant analysis was performed using the `lda` function from the package MASS. Code for both analysis, as well as the data pre-processing code, can be found in the `scripts` directory in the application repo. 
 
 
 ### Results
@@ -58,7 +58,7 @@ Each day of the week was averaged over the last 4 weeks in the dataset. Friday s
 Another result from this dataset is the difference in state-wide response in the categories of grocery and shopping. The shopping/restaurant activity started out at baseline pre-COVID19 and decreased as the pandemic set-in. The grocery activity started out at baseline pre-COVID19, took a huge activity spike at the onset of the pandemic (we believe we have visualized the toilet paper shortage), then went below baseline as the pandemic set in (Figure 2).
 
 
-**Local COVID-19 Demographic and County-level Plots** 
+### Local COVID-19 Demographic and County-level Plots** 
 
 ![Figure 2. Local COVID Plots](shiny_app/www/Ling_Figures.png)
 
@@ -84,6 +84,27 @@ With all the information above, we saw that the younger generations are the main
 <!-- #![Figure 5. Texas Covid Cases by County](shiny_app/www/Texas Covid Cases by County.png) -->
 <!-- #![Figure 8. US Cases Confirmed vs Death by State](shiny_app/www/US Cases Confirmed vs Death by State.png) -->
 
+### Influence of County-Level Features on COVID-19 Severity in the Unites States
+
+![Figure 3. Sample COVID-19 Severity Analysis (Florda)](shiny_app/www/example_covid_lda_tab.png)
+
+![Figure 4. First Discriminant Scalar Values for Select States](shiny_app/www/lda_weights_select_states.png)
+
+Though few communities on Earth have been spared from the COVID-19 pandemic entirely, the magnitude of epidemic severity has differed significantly between countries [2]("https://www.nature.com/articles/s41598-020-75848-2"). We reasoned that these population-level differences in COVID-19 severity should also be observable on the United States county level. Studying population-level disease severity at this scale has many advantages, including being more manageable with respect to data collection and processing. Additionally, since we can consider population-level differences on a state-by-state basis, our analysis is potentially less confounded by differences in COVID-19 policy applied at the state or national level.
+
+We were interested to understand which county-level features explain the most variation in COVID-19 severity in the United States. To explore this further, we compiled a data set of 9 different features that could reasonably contribute to COVID-19 severity, such as diabetes prevalence, median household income, and population density. Here, we define severity as the relative disease mortality rate, i.e. the cumulative number of deaths divided by the size of the population in a given county. We model COVID-19 severity (response) as a function of our multivariate data using linear discriminant analysis (LDA) (fig 3). We chose an LDA because the model weights can provide insight into which features are relatively more important for discriminating between groups. 
+
+To test the validity of the models, we partitioned data into a training set (80%) and a test set (20%). The models performed reasonably well, with prediction accuracies falling between 70%-80% for most states. We note that for states with poor prediction accuracy, such as New Hampshire (50%, with the expected random success rate being 33%), a small sample size or poor data quality may be to blame. 
+
+Note: the following discussion may be easier to follow using the app. 
+
+Overall, our results indicate that no single feature is the most explanatory across states, however, within different geographic regions specific patterns emerge. For example, in southern states, there was generally a strong separation due to adult smoking or adult obesity along the first discriminant axis (fig 4, Florida panel), in the expected direction (disease severity positively correlated with higher smoking/obesity prevalence). In these states, population age seems less important overall. 
+
+In California, smoking and obesity prevalence are both strong separators (fig 4, California panel), but unexpectedly, smoking prevalence is negatively associated with COVID-19 severity. It is also interesting to note that counties with an older population appeared better off, on average, than younger counties. This pattern is also observed in Washington as well. One plausible explanation is that efforts to protect older communities in these states (both of which implemented relatively severe CODID-19 restrictions) were successful. 
+
+Although population density did not generally appear to explain as much variance in COVID-19 severity as expected, it was one of the most important features in some states, such as Vermont (fig 4, Vermont panel). Here, we can clearly see that population density and air pollution are correlated. In Vermont, it seems that urban communities were generally worse off, while rural communities were better protected, regardless of wellness characteristics.
+
+Finally, while the analysis provided interesting insights into COVID-19 severity in some states, results for other states were markedly less clear. In particular, models for mid-western states performed less well at separating the data and has worse prediction accuracies. One reason for this may be that in these states, the population is relatively homogeneous, and there is therefore no real difference between COVID-19 severity at the county level. Alternatively, since COVID-19 timelines between states also differ, it may be that these states are not far along enough in the pandemic for discernible patterns to emerge. 
 
 ### Conclusions
 
@@ -91,16 +112,20 @@ Different Texas communities showed different activity patterns during COVID-19. 
 
 Grocery stores showed a huge spike in activity at the onset of the pandemic, while other retail stores did not have this spike.
 
-Younger generations are the main groups that are contracting and potentially spreading the disease, while the older population (mainly above 50) are the ones who are dying. Lubbock and Brazos counties have the highest amount of reported college and university cases. COVID-19 has disproportionately causing more deaths in the non-White population, but Asians have no reported deaths so fat in Austin.
+Younger generations are the main groups that are contracting and potentially spreading the disease, while the older population (mainly above 50) are the ones who are dying. Lubbock and Brazos counties have the highest amount of reported college and university cases. COVID-19 has disproportionately causing more deaths in the non-White population, but Asians have no reported deaths so far in Austin.
 
+Population-level differences in COVID-19 severity can be observed at the county level, and different population level features explain more variance in different states. While each feature was most explanatory in at least one state (with the exception of Food Availability Index, which seemed the least explanatory overall) Adult Obesity Prevalence was qualitatively the most explanatory across states. The analysis conducted here helps us to better understand the population-level factors that contribute to COVID-19 severity, a disease that has caused considerable economic and emotional burden. These insights could be used to guide resource allocation during the current COVID-19 pandemic, and to help prepare for related future pandemics. 
 
 ### Author Contributions
 
 Ling: Learned to look up data from public data sources and clean up for R plotting. Used ggplots we learned in class to generate demographic information plots and learned to integrate the plots into the shiny app.
 
-Alexis:
+Alexis: Collected and processed data for the COVID severity analysis, implemented a PCA (not shown in the app, but the analysis code is in the scripts directory) and LDA of the data, wrote the server code that runs the LDA portion of the app, wrote the results for the severity analysis, helped write up the abstract and introduction.
 
 Kendra: Learned and set-up the shiny app, deployed the app on the shiny server, made the gif on the front page, and made the interactive plots on the "COVID-19 Dashboard: State and County" tab. Wrote the results for my plots, contributed to abstrct and introduction.
 
-https://www.healthline.com/health-news/fauci-and-other-experts-debate-when-our-covid-19-lives-will-return-to-normal#3
+### References
+
+1. https://www.healthline.com/health-news/fauci-and-other-experts-debate-when-our-covid-19-lives-will-return-to-normal#3
+2. https://www.nature.com/articles/s41598-020-75848-2
 
