@@ -225,11 +225,14 @@ https://www.google.com/covid19/mobility/ Accessed: 10/3/2020.'),sidebarPanel("")
                   fluidRow(
                     column(6, 
                       plotOutput("component_plot")
+                    ),
+                    column(6,
+                      tableOutput("discriminant_scalings")
                     )
                   ),
                   fluidRow(
-                    column(6, 
-                      tableOutput("variable_density_plot")
+                    column(12, 
+                      plotOutput("variable_density_plot")
                     )
                   )
                 )
@@ -379,6 +382,29 @@ server <- function(input, output) {
     ggplot(plot_data, aes(LD1, LD2, color = training_data$Severity)) +
       geom_point() +
       stat_ellipse(type = "euclid")
+  })
+  
+  output$variable_density_plot <- renderPlot({
+    lda_data <- lda_data()
+    hist_data <- lda_data$training_data %>% 
+      rename(`Percent over 65` = "Percent_Over_65", `Population Density` = "pop_density") %>%
+      pivot_longer(cols = c(1,2,3,4,5,6,7,8,9), names_to = "variable")
+    ggplot(hist_data, aes(x = value, colour = Severity)) + 
+      geom_density() + 
+      facet_wrap( ~ variable, scales = "free_y")
+  })
+  
+  output$discriminant_scalings <- renderTable({
+    lda_data <- lda_data()
+    model <- lda_data$model
+    scaling <- data.frame(model$scaling)
+    tmp <- cbind(Variable = rownames(scaling), scaling)
+    rownames(tmp) <- 1:nrow(tmp)
+    tibble(tmp) %>% 
+      mutate(Variable = sub("pop_density", "Population Density", Variable)) %>%
+      mutate(Variable = sub("Percent_Over_65", "Percent Over 65", Variable)) %>%
+      mutate(Variable = sub("`", "", Variable)) %>%
+      mutate(Variable = sub("`", "", Variable))
   })
   
 }
