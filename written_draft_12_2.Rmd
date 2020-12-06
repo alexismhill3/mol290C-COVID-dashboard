@@ -10,7 +10,7 @@ editor_options:
 
 ### Abstract
 
-The novel coronavirus, designated as the severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2), has been causing an ongoing pandemic worldwide. As of December 2, 2020, the virus has caused 64,844,711 global cases, and 1.5 million deaths have been reported. The common routes of transmission are contact and droplet transmission as well as airborne transmission. Even though the virus is causing deadly symptoms and is highly transmissible, no vaccine is currently available to protect against it. Therefore, we developed a coronavirus disease (COVID-19) information application to help educate the public about the virus and to provide analysis to help people make safer decisions during the pandemic. The COVID-19 dashboard contains interactive maps for the state of Texas with both county activity data from a google dataset and COVID-19 cases. Our application also provides local behavior recommendations for individual counties, such as the best day to go shopping or to the park during the week. In the analysis section, we explore how COVID-19 outcomes vary by demographic (age, race, sex, etc.), and investigate how population level attributes influence COVID-19 severity on the county level.
+The novel coronavirus, designated as the severe acute respiratory syndrome coronavirus-2 (SARS-CoV-2), has been causing an ongoing pandemic worldwide. As of December 2, 2020, the virus has caused 64,844,711 global cases, and 1.5 million deaths have been reported. The common routes of transmission are contact and droplet transmission as well as airborne transmission. Even though the virus is causing deadly symptoms and is highly transmissible, no vaccine is currently available to protect against it. Therefore, we developed a coronavirus disease (COVID-19) information application to help educate the public about the virus and to provide analysis to help people make safer decisions during the pandemic. We created a Shiny app that has two sections: an interactive, local COVID-19 dashboard, and a COVID-19 statistical analysis section. The COVID-19 dashboard contains Travis county and Texas demographic information (age, race, ethnicity, etc.) on the confirmed cases and deaths as well as interactive maps for the state of Texas with both county activity data from a google dataset and COVID-19 cases. There will also be a section that provides local behavior recommendations for individual county, such as the best day to go shopping or to the park during the week. In the statistical analysis section, we investigate the role of pre-existing conditions in COVID-19 morbidity.
 
 ### Introduction
 
@@ -22,8 +22,9 @@ COVID-19 has disproportional impacts on different locations, age groups and raci
 ### Overall goals
 
 1. Learn how to use and deploy Shiny apps with interactive graphs/maps.
-2. Create a COVID-19 interactive dashboard using Shiny to gain insignt into local COVID-19 trends.
-3. Learn about the possibilities and limits about how publicly available COVID data can be used to help the public.
+2. Generate demographic plots to explore the demographical distributions of the local confirmed cases and deaths.
+3. Create a COVID-19 interactive dashboard using Shiny to gain insignt into local COVID-19 trends.
+4. Learn about the possibilities and limits about how publicly available COVID data can be used to help the public.
 
 
 ### Data Sources and computational methods
@@ -83,10 +84,12 @@ Different Texas communities showed different activity patterns during COVID-19. 
 
 Grocery stores showed a huge spike in activity at the onset of the pandemic, while other retail stores did not have this spike.
 
+Younger generations are the main groups that are contracting and potentially spreading the disease, while the older population (mainly above 50) are the ones who are dying. Lubbock and Brazos counties have the highest amount of reported college and university cases. COVID-19 has disproportionately causing more deaths in the non-White population, but Asians have no reported deaths so fat in Austin.
+
 
 ### Author Contributions
 
-Ling:
+Ling: Learned to look up data from public data sources and clean up for R plotting. Used ggplots we learned in class to generate demographic information plots and learned to integrate the plots into the shiny app.
 
 Alexis:
 
