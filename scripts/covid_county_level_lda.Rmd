@@ -15,7 +15,10 @@ county_health_covid <- read_csv("../data/health_metrics_and_covid_cases_by_count
 # create new column for deaths per capita
 county_health_covid <- county_health_covid %>% 
   mutate(`Deaths per capita` = deaths / `Population`)
-state_choice <- c("Florida") # select a state for the analysis
+state_choice <- c("Ohio") # select a state for the analysis
+
+# drop rows with NA values, since these can't be used for training or testing
+county_health_covid <- county_health_covid %>% drop_na()
 
 # lets see what the deaths per capita distribution looks like:
 county_health_covid %>% filter(State == state_choice) %>% ggplot() +
@@ -46,9 +49,6 @@ subset_by_state
 ```{r}
 # drop unneeded columns
 lda_data <- dplyr::select(subset_by_state, -c("County", "Code", "State", "Abbrev", "Population", "state", "fips", "cases", "deaths", `Deaths per capita`))
-
-# drop rows with NA values, since these can't be used for training or testing
-lda_data <- lda_data %>% drop_na()
 
 # partition the data into a training set and a test set
 # code for this adapted from:

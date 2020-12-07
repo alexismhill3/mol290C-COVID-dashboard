@@ -1,0 +1,17 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+select_states <- read_csv("../data/lda_weights_select_states.csv")
+ggplot(select_states, aes(x = Variable, y = Weight)) + 
+  geom_bar(stat = "identity") + 
+  coord_flip() +
+  facet_wrap( ~ State, scales = "free_x")
+ggsave("lda_weights_select_states.png")
+```

@@ -10,6 +10,9 @@ subset_data_by_state <- function(county_data, state_choice) {
   subset_by_state <- subset_by_state %>% 
     mutate(`Deaths per capita` = deaths / `Population`)
   
+  # drop rows with NA values, since these can't be used for training or testing
+  subset_by_state <- subset_by_state %>% drop_na()
+  
   # correct the positive skew by applying a square-root transformation
   subset_by_state$`Deaths per capita` <- sqrt(subset_by_state$`Deaths per capita`)
   
