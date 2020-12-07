@@ -1,5 +1,5 @@
 ---
-title: 'COVID-19 Dashboard: Community COVID data and disease outcomes'
+title: 'COVID-19 Dashboard: State and Local Analysis'
 output:
   html_document:
     df_print: paged
@@ -55,7 +55,7 @@ Overall, most counties' activity trend followed a similar pattern. Activity drop
 
 Each day of the week was averaged over the last 4 weeks in the data set. Friday showed the highest activity score and Monday showed the lowest in grocery and shopping categories in Travis county. In Potter county, Thursday had the highest activity score in both counties, while Wednesday and Monday had the lowest activity scores for shopping and grocery respectively (Figure 1A).
 
-Another result from this data set is the difference in state-wide response in the categories of grocery and shopping. The shopping/restaurant activity started out at baseline pre-COVID19 and decreased as the pandemic set-in. The grocery activity started out at baseline pre-COVID19, took a huge activity spike at the onset of the pandemic (we believe we have visualized the toilet paper shortage), then went below baseline as the pandemic set in (Figure 2).
+Another result from this dataset is the difference in state-wide response in the categories of grocery and shopping. The shopping/restaurant activity started out at baseline pre-COVID19 and decreased as the pandemic set in. The grocery activity started out at baseline pre-COVID19, took a huge activity spike at the onset of the pandemic (we believe we have visualized the toilet paper shortage), then went below baseline as the pandemic set in (Figure 2).
 
 
 ### Local COVID-19 Demographic and County-level Plots** 
