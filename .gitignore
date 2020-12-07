@@ -3,3 +3,4 @@ mol290c.Rproj
 .RData
 .Rhistory
 scripts/*.nb.html
+.DS_Store
