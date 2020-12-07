@@ -98,11 +98,11 @@ To test the validity of the models, we partitioned data into a training set (80%
 
 Note: the following discussion may be easier to follow using the app. 
 
-Overall, our results indicate that no single feature is the most explanatory across states, however, within different geographic regions specific patterns emerge. For example, in southern states, there was generally a strong separation due to adult smoking or adult obesity along the first discriminant axis (fig 4, Florida panel), in the expected direction (disease severity positively correlated with higher smoking/obesity prevalence). In these states, population age seems less important overall. 
+Overall, our results indicate that no single feature is the most explanatory across states, however, within different geographic regions specific patterns emerge. For example, in southern states, there was generally a strong separation due to adult smoking or adult obesity along the first discriminant axis (Figure 4, Florida panel), in the expected direction (disease severity positively correlated with higher smoking/obesity prevalence). In these states, population age seems less important overall. 
 
-In California, smoking and obesity prevalence are both strong separators (fig 4, California panel), but unexpectedly, smoking prevalence is negatively associated with COVID-19 severity. It is also interesting to note that counties with an older population appeared better off, on average, than younger counties. This pattern is also observed in Washington as well. One plausible explanation is that efforts to protect older communities in these states (both of which implemented relatively severe CODID-19 restrictions) were successful. 
+In California, smoking and obesity prevalence are both strong separators (Figure 4, California panel), but unexpectedly, smoking prevalence is negatively associated with COVID-19 severity. It is also interesting to note that counties with an older population appeared better off, on average, than younger counties. This pattern is also observed in Washington as well. One plausible explanation is that efforts to protect older communities in these states (both of which implemented relatively severe CODID-19 restrictions) were successful. 
 
-Although population density did not generally appear to explain as much variance in COVID-19 severity as expected, it was one of the most important features in some states, such as Vermont (fig 4, Vermont panel). Here, we can clearly see that population density and air pollution are correlated. In Vermont, it seems that urban communities were generally worse off, while rural communities were better protected, regardless of wellness characteristics.
+Although population density did not generally appear to explain as much variance in COVID-19 severity as expected, it was one of the most important features in some states, such as Vermont (Figure 4, Vermont panel). Here, we can clearly see that population density and air pollution are correlated. In Vermont, it seems that urban communities were generally worse off, while rural communities were better protected, regardless of wellness characteristics.
 
 Finally, while the analysis provided interesting insights into COVID-19 severity in some states, results for other states were markedly less clear. In particular, models for mid-western states performed less well at separating the data and has worse prediction accuracies. One reason for this may be that in these states, the population is relatively homogeneous, and there is therefore no real difference between COVID-19 severity at the county level. Alternatively, since COVID-19 timelines between states also differ, it may be that these states are not far along enough in the pandemic for discernible patterns to emerge. 
 
@@ -118,11 +118,11 @@ Population-level differences in COVID-19 severity can be observed at the county 
 
 ### Author Contributions
 
-Ling: Learned to look up data from public data sources and clean up for R plotting. Used ggplots we learned in class to generate demographic information plots and learned to integrate the plots into the shiny app.
+Ling: Learned to look up data from public data sources and to clean up datasets for R plotting. Used ggplots we learned in class to generate demographic information plots and learned to integrate the plots into the shiny app, and also contributed to abstract and introduction.
 
 Alexis: Collected and processed data for the COVID severity analysis, implemented a PCA (not shown in the app, but the analysis code is in the scripts directory) and LDA of the data, wrote the server code that runs the LDA portion of the app, wrote the results for the severity analysis, helped write up the abstract and introduction.
 
-Kendra: Learned and set-up the shiny app, deployed the app on the shiny server, made the gif on the front page, and made the interactive plots on the "COVID-19 Dashboard: State and County" tab. Wrote the results for my plots, contributed to abstrct and introduction.
+Kendra: Learned and set-up the shiny app, deployed the app on the shiny server, made the gif on the front page, and made the interactive plots on the "COVID-19 Dashboard: State and County" tab. Wrote the results for my plots, contributed to abstract and introduction.
 
 ### References
 
