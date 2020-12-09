@@ -1,7 +1,12 @@
 ---
 title: "R Notebook"
+author: "Alexis Hill"
 output: html_notebook
 ---
+
+## Overview
+
+Linear discriminant analysis of COVID-19 severity on the county level (per state).
 
 ### Load libraries
 ```{r}

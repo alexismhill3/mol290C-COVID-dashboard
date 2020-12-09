@@ -1,7 +1,12 @@
 ---
 title: "R Notebook"
+author: "Alexis Hill"
 output: html_notebook
 ---
+
+## Overview
+
+Creates barplots for figure 4 of the report.
 
 ```{r}
 library(tidyverse)
@@ -13,5 +18,5 @@ ggplot(select_states, aes(x = Variable, y = Weight)) +
   geom_bar(stat = "identity") + 
   coord_flip() +
   facet_wrap( ~ State, scales = "free_x")
-ggsave("lda_weights_select_states.png")
+ggsave("../shiny_app/www/lda_weights_select_states.png")
 ```

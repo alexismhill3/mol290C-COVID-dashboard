@@ -1,11 +1,12 @@
 ---
 title: "R Notebook"
+author: "Alexis Hill"
 output: html_notebook
 ---
 
 ## Overview
 
-This code reads in the dataset documented by `build_classifer_dataset.Rmd` and does a PCA (on the state level) to get a better feel for the data. 
+This code reads in the data set documented by `county_atributes_and_covid_severity.Rmd` and does a PCA (on the state level) to get a better feel for the data. 
 
 ### Load libraries
 ```{r}
