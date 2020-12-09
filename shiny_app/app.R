@@ -381,7 +381,8 @@ server <- function(input, output) {
     plot_data <- data.frame(predict(lda_data$model)$x)
     ggplot(plot_data, aes(LD1, LD2, color = training_data$Severity)) +
       geom_point() +
-      stat_ellipse(type = "euclid")
+      stat_ellipse(type = "euclid") +
+      labs(color = "COVID-19 Severity \n by Mortality Rate")
   })
   
   output$variable_density_plot <- renderPlot({
