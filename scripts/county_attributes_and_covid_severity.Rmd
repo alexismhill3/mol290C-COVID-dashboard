@@ -1,11 +1,12 @@
 ---
 title: "R Notebook"
+author: "Alexis Hill"
 output: html_document
 ---
 
 ## Overview
 
-This serves to document how I put together my dataset for the COVID-19 county classifier I'm trying to make (still in progress). 
+This serves to document how I put together the data set for the COVID-19 county level severity analysis. 
 
 ```{r}
 library(tidyverse)
@@ -52,7 +53,7 @@ county_health
 
 ### Merge the county-level health data with COVID-19 case counts and death counts
 ```{r}
-# grab COVID cases & deaths (by county) dataset from the internet
+# grab COVID cases & deaths (by county) data set from the internet
 covid_data <- read_csv("https://github.com/nytimes/covid-19-data/raw/master/us-counties.csv")
 covid_data <- covid_data %>% filter(date == "2020-11-20")
 # merge covid case/death counts per county with county health data

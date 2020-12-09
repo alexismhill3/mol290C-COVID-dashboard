@@ -1,9 +1,12 @@
 ---
 title: "R Notebook"
+author: "Alexis Hill"
 output: html_notebook
 ---
 
 ## Overview
+
+Downloads population density info from the internet.
 
 ```{r}
 library(tidyverse)
